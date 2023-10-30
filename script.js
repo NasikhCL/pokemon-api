@@ -1,4 +1,4 @@
-const typeColor = {
+const colorList = {
     bug: "#26de81",
     dragon: "#ffeaa7",
     electric: "#fed330",
@@ -20,12 +20,11 @@ const typeColor = {
   const card = document.getElementById("card");
   const btn = document.getElementById("btn");
   
+
+  //  Fetch Random Pokemon Data
   let getPokeData = () => {
-    // Generate a random number between 1 and 150
     let id = Math.floor(Math.random() * 150) + 1;
-    // Combine the pokeapi url with pokemon id
     const finalUrl = url + id;
-    // Fetch generated URL
     fetch(finalUrl)
       .then((response) => response.json())
       .then((data) => {
@@ -33,21 +32,17 @@ const typeColor = {
       });
   };
   
-  //Generate Card
+  //Generate The Card
   
   let generateCard = (data) => {
-    // Get necessary data and assign it to variables
-    console.log(data);
     const hp = data.stats[0].base_stat;
-    // const imgSrc = data.sprites.front_default;
     const pokeName = data.name[0].toUpperCase() + data.name.slice(1);
     const statAttack = data.stats[1].base_stat;
     const statDefense = data.stats[2].base_stat;
     const statSpeed = data.stats[5].base_stat;
   
-    // Set themeColor based on pokemon type
-    const themeColor = typeColor[data.types[0].type.name];
-    console.log(themeColor);
+    // Set Theme color based on pokemon type
+    const themeColor = colorList[data.types[0].type.name];
     card.innerHTML = `
         <div class="left">
             <p class="hp">
@@ -74,9 +69,12 @@ const typeColor = {
             </div>
         </div>
     `;
+
     appendTypes(data.types);
     styleCard(themeColor);
   };
+
+  // Appending the types of the pokemon
   let appendTypes = (types) => {
     types.forEach((item) => {
       let span = document.createElement("SPAN");
@@ -84,6 +82,7 @@ const typeColor = {
       document.querySelector(".types").appendChild(span);
     });
   };
+  // Styling the Card
   let styleCard = (color) => {
     card.style.background = `radial-gradient(circle at 50% -8%, ${color} 35%, #ffffff 25%)`;
     card.querySelectorAll(".types span").forEach((typeColor) => {
@@ -94,6 +93,9 @@ const typeColor = {
       });
   };
   
+  //adding event listener to the button
   btn.addEventListener("click", getPokeData);
+
+  //fetching data of pokemon on load
   window.addEventListener("load", getPokeData);
   
