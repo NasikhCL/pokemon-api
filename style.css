@@ -5,8 +5,7 @@
     font-family: sans-serif;
   }
   body {
-    background: url(assets/pexels-vincent-ma-janssen-1310847.jpg);
-    background-size: cover;
+    background-color:#fff9c4;
   }
   .container {
     width: 300px;
